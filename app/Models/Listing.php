@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\FormattedPrice;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Listing extends Model
 {
     use HasFactory;
+    use FormattedPrice;
 
     public function biddings()
     {
@@ -17,6 +19,11 @@ class Listing extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function user()

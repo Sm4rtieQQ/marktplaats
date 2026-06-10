@@ -2,14 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\Comment;
 use App\Models\Listing;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Listing>
+ * @extends Factory<Comment>
  */
-class ListingFactory extends Factory
+class CommentFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,10 +20,9 @@ class ListingFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->sentence(4),
-            'description' => fake()->paragraph(),
-            'price' => fake()->randomfloat(2, 5, 250),
+            'listing_id' => Listing::inRandomOrder()->first()->id,
             'user_id' => User::inRandomOrder()->first()->id,
+            'text' => fake()->paragraph(),
         ];
     }
 }

@@ -8,4 +8,40 @@
         "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
+    --color-bg1: oklch(92.9% 0.013 255.508);
+    --color-bg1hover: oklch(86.9% 0.022 252.894);
+    --color-bg2: oklch(96.8% 0.007 247.896);
+    --color-text1: oklch(30.2% 0.056 229.695);
+    --color-accent: oklch(45% 0.085 224.283);
+}
+
+.content {
+    @apply py-6 mx-auto;
+}
+
+.title {
+    @apply text-3xl font-bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.heading {
+    @apply font-bold text-lg;
+}
+
+.price {
+    @apply text-xl font-bold;
+    font-family: monospace;
+}
+
+.bid {
+    @apply text-sm;
+    font-family: monospace;
+}
+
+.navbar {
+    @apply p-6 shadow-lg sticky top-0;
+}
+
+.wrap {
+    @apply rounded-md shadow-lg;
 }

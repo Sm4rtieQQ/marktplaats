@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ListingSeeder::class,
             BiddingSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }

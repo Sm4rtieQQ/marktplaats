@@ -35,6 +35,11 @@ class User extends Authenticatable
         return $this->hasMany(Bidding::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function listings()
     {
         return $this->hasMany(Listing::class);

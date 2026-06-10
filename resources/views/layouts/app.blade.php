@@ -9,7 +9,9 @@
 
 <body>
     @include('partials.nav')
-    @yield('content')
+    <div class="content px-20">
+        @yield('content')
+    </div>
 </body>
 
 

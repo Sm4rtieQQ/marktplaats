@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bidding;
+use App\Models\Comment;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 
@@ -12,11 +14,11 @@ class ListingController extends Controller
      */
     public function index()
     {
-        $listings = Listing::get();
-        return view('index', compact($listings));
+        $listings = Listing::orderBy('created_at', 'desc')->get();
+        return view('index', compact('listings'));
     }
 
-    /**
+    /**np
      * Show the form for creating a new resource.
      */
     public function create()
@@ -37,7 +39,10 @@ class ListingController extends Controller
      */
     public function show(Listing $listing)
     {
-        //
+        $biddings = Bidding::where('listing_id', $listing->id)->orderBy('bid', 'desc')->get();
+        $comments = Comment::where('listing_id', $listing->id)->orderBy('created_at', 'asc')->get();
+
+        return view('listings.show', compact('listing', 'biddings', 'comments'));
     }
 
     /**

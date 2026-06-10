@@ -20,9 +20,9 @@ class BiddingFactory extends Factory
     public function definition(): array
     {
         return [
-            'bid' => fake()->randomfloat(2, 0, 999),
             'listing_id' => Listing::inRandomOrder()->first()->id,
             'user_id' => User::inRandomOrder()->first()->id,
+            'bid' => fake()->randomfloat(2, 0, 200),
         ];
     }
 }
