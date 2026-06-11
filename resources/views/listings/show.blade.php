@@ -19,6 +19,7 @@
 
         <div class="grid gap-2">
             <h2 class="heading text-accent">Reacties</h2>
+            @if($comments->isNotEmpty())
             @foreach($comments as $comment)
             <div class="wrap bg-bg1 p-4 relative">
                 <span class="font-semibold">{{$comment->user->name}}</span>
@@ -26,24 +27,37 @@
                 <p>{{$comment->text}}</p>
             </div>
             @endforeach
+            @else
+            <span class="text-sm italic">Nog geen reacties.</span>
+            @endif
         </div>
     </div>
 
     <div>
-        <div class="grid gap-2">
-            <h2 class="heading text-accent">Vraagprijs</h2>
-            <span class="wrap grid bg-bg1 p-2 price text-accent mb-6">€ {{$listing->formattedPrice()}}</span>
-
-            <h2 class="heading text-accent">Bod plaatsen</h2>
-            <input class="wrap grid bg-bg1 p-2 mb-6" />
-
-            <h2 class="heading text-accent">Huidige biedingen</h2>
-            @foreach($biddings as $bidding)
-            <div class="wrap grid grid-cols-2 bg-bg1 p-2">
-                <span class="bid text-sm self-center">€ {{$bidding->formattedPrice('bid')}}</span>
-                <span class="self-center font-semibold">{{$bidding->user->name}}</span>
+        <div class="grid gap-6">
+            <div>
+                <h2 class="heading text-accent">Vraagprijs</h2>
+                <span class="wrap grid bg-bg1 p-2 price text-accent">€ {{$listing->formattedPrice()}}</span>
             </div>
-            @endforeach
+
+            <div>
+                <h2 class="heading text-accent">Bod plaatsen</h2>
+                <input class="wrap grid bg-bg1 p-2" />
+            </div>
+
+            <div>
+                <h2 class="heading text-accent">Huidige biedingen</h2>
+                @if($biddings->isNotEmpty())
+                @foreach($biddings as $bidding)
+                <div class="wrap grid grid-cols-2 bg-bg1 p-2">
+                    <span class="bid text-sm self-center">€ {{$bidding->formattedPrice('bid')}}</span>
+                    <span class="self-center font-semibold">{{$bidding->user->name}}</span>
+                </div>
+                @endforeach
+                @else
+                <span class="text-sm italic">Nog niet geboden.</span>
+                @endif
+            </div>
         </div>
     </div>
 

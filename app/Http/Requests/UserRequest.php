@@ -12,7 +12,7 @@ class UserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,16 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'A.u.b. een geldig email adres invoeren.',
+            'password.required' => 'A.u.b. een wachtwoord invoeren.',
         ];
     }
 }

@@ -8,40 +8,54 @@
         "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
-    --color-bg1: oklch(92.9% 0.013 255.508);
-    --color-bg1hover: oklch(86.9% 0.022 252.894);
-    --color-bg2: oklch(96.8% 0.007 247.896);
-    --color-text1: oklch(30.2% 0.056 229.695);
-    --color-accent: oklch(45% 0.085 224.283);
+    --color-bg1: oklch(92.9% 0.013 255.508); /* slate-200 */
+    --color-bg1hover: oklch(86.9% 0.022 252.894); /* slate-300 */
+    --color-bg2: oklch(96.8% 0.007 247.896); /* slate-50 */
+    --color-text1: oklch(30.2% 0.056 229.695); /* cyan-950 */
+    --color-accent: oklch(45% 0.085 224.283); /* cyan-800 */
 }
 
-.content {
-    @apply py-6 mx-auto;
-}
+@layer components {
+    .content {
+        @apply py-6 mx-auto;
+    }
 
-.title {
-    @apply text-3xl font-bold;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-}
+    .title {
+        @apply text-3xl font-bold;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
 
-.heading {
-    @apply font-bold text-lg;
-}
+    .heading {
+        @apply font-bold text-lg;
+    }
 
-.price {
-    @apply text-xl font-bold;
-    font-family: monospace;
-}
+    .price {
+        @apply text-xl font-bold;
+        font-family: monospace;
+    }
 
-.bid {
-    @apply text-sm;
-    font-family: monospace;
-}
+    .bid {
+        @apply text-sm;
+        font-family: monospace;
+    }
 
-.navbar {
-    @apply p-6 shadow-lg sticky top-0;
-}
+    .navbar {
+        @apply p-6 shadow-lg sticky top-0;
+    }
 
-.wrap {
-    @apply rounded-md shadow-lg;
+    .wrap {
+        @apply rounded-md shadow-lg;
+    }
+
+    .btn {
+        @apply shadow-lg hover:outline-2 hover:outline-offset-2 cursor-pointer p-2 rounded-md;
+    }
+
+    .btn-submit {
+        @apply bg-cyan-950 text-white hover:outline-cyan-950;
+    }
+
+    .btn-cancel {
+        @apply bg-slate-50;
+    }
 }

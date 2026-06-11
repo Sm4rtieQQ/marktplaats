@@ -23,7 +23,7 @@ class ListingController extends Controller
      */
     public function create()
     {
-        //
+        return view('listings.create');
     }
 
     /**
@@ -31,7 +31,16 @@ class ListingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $listing = new Listing();
+        $listing->fill([
+            "name" => $request->input('name'),
+            "description" => $request->input('description'),
+            "price" => $request->input('price'),
+            "user_id" => 1,
+        ]);
+
+        $listing->save();
+        return redirect()->route('listings.index');
     }
 
     /**
