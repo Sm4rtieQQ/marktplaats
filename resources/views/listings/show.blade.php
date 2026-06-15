@@ -5,12 +5,12 @@
 @section('content')
 <div class="grid grid-cols-[auto_200px] gap-6 text-text1">
 
-    <div>
+    <div class="grid gap-6">
 
-        <div class="wrap bg-bg1 p-4 relative mb-6">
+        <div class="wrap bg-bg1 p-4 relative">
             <h2 class="heading text-accent mb-2">{{$listing->name}}</h2>
             <span class="absolute top-4 right-4 text-xs italic">{{$listing->created_at->format('d-m-y h:i')}}</span>
-            <p class="mb-16">{{$listing->description}}</p>
+            <p class="mb-16">{!! nl2br(e($listing->description)) !!}</p>
             <div class="absolute bottom-4 left-4 grid">
                 <span class="text-sm">Aangeboden door:</span>
                 <span class="font-semibold">{{$listing->user->name}}</span>
@@ -31,6 +31,13 @@
             <span class="text-sm italic">Nog geen reacties.</span>
             @endif
         </div>
+
+        <div class="grid gap-2">
+            <h2 class="heading text-accent">Neem deel aan het gesprek</h2>
+            <form action="{{ route('comment.store', $listing->id) }}" method="POST">
+                <textarea class="wrap w-full h-64 bg-bg1 p-2" id="text" name="text"></textarea>
+            </form>
+        </div>
     </div>
 
     <div>
@@ -40,12 +47,13 @@
                 <span class="wrap grid bg-bg1 p-2 price text-accent">€ {{$listing->formattedPrice()}}</span>
             </div>
 
-            <div>
+            <form action="{{ route('bid.store', $listing->id) }}" method="POST">
+                @csrf
                 <h2 class="heading text-accent">Bod plaatsen</h2>
-                <input class="wrap grid bg-bg1 p-2" />
-            </div>
+                <input class="wrap price text-md grid bg-bg1 p-2" name="bid" id="bid" />
+            </form>
 
-            <div>
+            <div class="grid gap-2">
                 <h2 class="heading text-accent">Huidige biedingen</h2>
                 @if($biddings->isNotEmpty())
                 @foreach($biddings as $bidding)

@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use App\FormattedPrice;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
+#[Fillable(['listing_id', 'user_id', 'bid'])]
 
 class Bidding extends Model
 {

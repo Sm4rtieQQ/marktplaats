@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ListingRequest;
 use App\Models\Bidding;
 use App\Models\Comment;
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ListingController extends Controller
 {
@@ -29,17 +31,15 @@ class ListingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ListingRequest $request)
     {
-        $listing = new Listing();
-        $listing->fill([
-            "name" => $request->input('name'),
-            "description" => $request->input('description'),
-            "price" => $request->input('price'),
-            "user_id" => 1,
+        Listing::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+            'user_id' => Auth::user()->id,
         ]);
 
-        $listing->save();
         return redirect()->route('listings.index');
     }
 

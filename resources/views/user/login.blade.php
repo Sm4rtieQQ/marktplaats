@@ -8,11 +8,11 @@
 
     <form action="{{route('user.auth')}}" method="POST">
         @csrf
-        <div class="wrap bg-bg1">
+        <div class="wrap bg-bg1 p-4">
             @if(session('success'))
             <span class="text-green-600 text-sm">{{session('success')}}</span>
             @endif
-            <div class="grid grid-cols-[120px_auto] p-4 gap-y-4">
+            <div class="grid grid-cols-[120px_auto] gap-y-4">
 
                 <label class="font-semibold self-center" for="email">Email</label>
                 <div class="grid">

@@ -6,7 +6,7 @@
 <div class="flex flex-wrap gap-4 justify-center">
 
     @foreach($listings as $listing)
-    <a class="wrap bg-bg1 p-4 w-80 min-h-80 relative hover:bg-bg1hover" href="{{ route('listings.show', $listing->id) }}">
+    <a class="wrap bg-bg1 p-4 w-80 min-h-80 relative hover:bg-bg1hover" href="{{ route('listing.show', $listing->id) }}">
         <div>
             <h2 class="heading text-accent">{{$listing->name}}</h2>
         </div>

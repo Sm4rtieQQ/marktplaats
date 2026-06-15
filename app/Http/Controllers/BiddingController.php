@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bidding;
+use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BiddingController extends Controller
 {
@@ -26,9 +28,15 @@ class BiddingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Listing $listing)
     {
-        //
+        Bidding::create([
+            'listing_id' => $listing->id,
+            'user_id' => Auth::user()->id,
+            'bid' => $request['bid'],
+        ]);
+
+        return redirect()->back();
     }
 
     /**
