@@ -2,11 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Bidding;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class BiddingRequest extends FormRequest
+class CommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,28 +22,19 @@ class BiddingRequest extends FormRequest
      */
     public function rules(): array
     {
-        $listing = $this->route('listing');
-        $highestBid = Bidding::where('listing_id', $listing->id)->max('bid') ?? 0;
-
         return [
-            'bid' => [
+            'text' => [
                 'required',
-                'numeric',
-                'max:2000',
-                'gt:' . $highestBid,
-            ],
+            ]
         ];
     }
 
     public function messages(): array
     {
         return [
-            'bid' => [
-                'required' => 'A.u.b. een bod invoeren.',
-                'numeric' => 'A.u.b. een geldig bedrag invoeren.',
-                'max' => 'Voor biedingen geldt een maximaal bedrag van €2.000.',
-                'gt' => 'Er is al hoger geboden.'
-            ],
+            'text' => [
+                'required' => 'Dit veld is verplicht.'
+            ]
         ];
     }
 }

@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UserRequest;
+use App\Mail\EmailConfirmation;
 use App\Models\Listing;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -59,12 +63,38 @@ class UserController extends Controller
     {
         $validated = $request->validated();
 
-        User::create([
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->route('login')->with('success', 'Account successvol aangemaakt!');
+        event(new Registered($user));
+
+        Auth::login($user);
+        $request->session()->regenerate();
+
+        return redirect()->route('verification.notice')->with('success', 'Account successvol aangemaakt!');
+    }
+
+    public function emailnotice()
+    {
+        return view('user.verificationNotice');
+    }
+
+    public function emailfulfill(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+
+        Mail::send(new EmailConfirmation($request->user()));
+
+        return redirect()->route('user.dashboard')->with('success', 'Email bevestigd!');
+    }
+
+    public function emailsendlink(Request $request)
+    {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', 'Bevestigingslink verstuurd!');
     }
 }

@@ -3,15 +3,13 @@
 @section('title', 'Inloggen')
 
 @section('content')
-<div class="w-[500px] mx-auto text-text1">
+<div class="w-[500px] mx-auto">
     <h1 class="heading text-accent">Inloggen</h1>
 
     <form action="{{route('user.auth')}}" method="POST">
         @csrf
         <div class="wrap bg-bg1 p-4">
-            @if(session('success'))
-            <span class="text-green-600 text-sm">{{session('success')}}</span>
-            @endif
+
             <div class="grid grid-cols-[120px_auto] gap-y-4">
 
                 <label class="font-semibold self-center" for="email">Email</label>

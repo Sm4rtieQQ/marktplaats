@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BiddingRequest;
 use App\Models\Bidding;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class BiddingController extends Controller
 {
@@ -28,7 +30,7 @@ class BiddingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Listing $listing)
+    public function store(BiddingRequest $request, Listing $listing)
     {
         Bidding::create([
             'listing_id' => $listing->id,
@@ -68,6 +70,10 @@ class BiddingController extends Controller
      */
     public function destroy(Bidding $bidding)
     {
-        //
+        Gate::authorize('delete', $bidding);
+
+        $bidding->delete();
+
+        return redirect()->back();
     }
 }
