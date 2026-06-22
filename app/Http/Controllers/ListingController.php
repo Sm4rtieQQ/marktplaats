@@ -6,8 +6,8 @@ use App\Http\Requests\ListingRequest;
 use App\Models\Bidding;
 use App\Models\Comment;
 use App\Models\Listing;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ListingController extends Controller
 {
@@ -25,7 +25,10 @@ class ListingController extends Controller
      */
     public function create()
     {
-        return view('listings.create');
+        $listing = new Listing();
+        $newListing = true;
+
+        return view('listings.create', compact('listing', 'newListing'));
     }
 
     /**
@@ -59,15 +62,30 @@ class ListingController extends Controller
      */
     public function edit(Listing $listing)
     {
-        //
+        Gate::authorize('edit', $listing);
+
+        $edit = true;
+        $newListing = false;
+
+        return view('listings.show', compact('listing', 'edit', 'newListing'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Listing $listing)
+    public function update(ListingRequest $request, Listing $listing)
     {
-        //
+        Gate::authorize('edit', $listing);
+
+        $newData = [
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+        ];
+
+        $listing->update($newData);
+
+        return redirect()->route('listing.show', $listing);
     }
 
     /**
@@ -75,6 +93,12 @@ class ListingController extends Controller
      */
     public function destroy(Listing $listing)
     {
-        //
+        Gate::authorize('edit', $listing);
+
+        $listing->biddings()->delete();
+        $listing->comments()->delete();
+        $listing->delete();
+
+        return redirect()->route('user.dashboard');
     }
 }

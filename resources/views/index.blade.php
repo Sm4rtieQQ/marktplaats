@@ -3,7 +3,7 @@
 @section('title', 'Overzicht')
 
 @section('content')
-<div class="flex flex-wrap gap-4 justify-center">
+<div class="flex flex-wrap gap-4">
 
     @foreach($listings as $listing)
     <a class="wrap bg-bg1 p-4 w-80 min-h-80 relative hover:bg-bg1hover" href="{{ route('listing.show', $listing->id) }}">

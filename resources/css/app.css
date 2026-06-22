@@ -22,7 +22,7 @@
 
     .title {
         @apply text-3xl font-bold;
-        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-family: Georgia, "Times New Roman", Times, serif;
     }
 
     .heading {
@@ -57,5 +57,9 @@
 
     .btn-cancel {
         @apply bg-slate-50;
+    }
+
+    .btn-delete {
+        @apply bg-red-500 hover:outline-red-500;
     }
 }

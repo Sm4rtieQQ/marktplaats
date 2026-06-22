@@ -3,6 +3,12 @@
 @section('title', $listing->name)
 
 @section('content')
+
+@if(isset($edit))
+<h2 class="heading text-accent mb-2">Advertentie aanpassen</h2>
+@include('forms.edit')
+@else
+
 <div class="grid grid-cols-[auto_200px] gap-6">
 
     <div class="grid gap-6">
@@ -15,6 +21,11 @@
                 <span class="text-sm">Aangeboden door:</span>
                 <span class="font-semibold">{{$listing->user->name}}</span>
             </div>
+            @can('edit', $listing)
+            <div class="absolute bottom-4 right-4 grid">
+                <a class="btn btn-submit" href="{{ route('listing.edit', $listing) }}">Aanpassen</a>
+            </div>
+            @endcan
         </div>
 
         <div class="grid gap-2">
@@ -96,4 +107,7 @@
     </div>
 
 </div>
+
+@endif
+
 @endsection

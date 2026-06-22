@@ -56,7 +56,11 @@ class UserController extends Controller
     {
         $listings = Listing::where('user_id', Auth::user()->id)->get();
 
-        return view('user.dashboard', compact('listings'));
+        $bidOn = Listing::whereHas('biddings', function ($query) {
+            $query->where('user_id', Auth::user()->id);
+        })->get();
+
+        return view('user.dashboard', compact('listings', 'bidOn'));
     }
 
     public function store(RegisterRequest $request)

@@ -13,25 +13,61 @@
 
     <h2 class="heading text-accent">Mijn advertenties</h2>
     @if($listings->isNotEmpty())
-    <div class="flex flex-wrap gap-4 justify-center">
+    <div class="flex flex-wrap gap-4">
         @foreach($listings as $listing)
-        <a class="wrap bg-bg1 p-4 w-80 min-h-80 relative hover:bg-bg1hover" href="{{ route('listing.show', $listing->id) }}">
+        <div class="wrap bg-bg1 p-4 w-80 min-h-80 relative">
 
             <h2 class="heading text-accent">{{$listing->name}}</h2>
             <p class="mb-[240px]">{!! nl2br(e($listing->description)) !!}</p>
 
-            <div class="wrap bg-bg2 h-48 flex justify-center items-center absolute bottom-12 left-4 right-4">
+            <div class="wrap bg-bg2 h-48 flex absolute justify-center items-center bottom-12 left-4 right-4">
                 <span class="text-sm italic">geen afbeelding geplaatst</span>
                 <span class="wrap bg-bg1 p-2 price text-text1 absolute bottom-2 right-2 z-40">€ {{$listing->formattedPrice()}}</span>
             </div>
 
+            <div class="absolute bottom-2 left-4 flex gap-2">
+                <a class="btn btn-submit text-xs italic" href="{{ route('listing.show', $listing) }}">Openen</a>
+                <a class="btn btn-submit text-xs italic" href="{{ route('listing.edit', $listing) }}">Aanpassen</a>
+                <form action="{{ route('listing.destroy', $listing) }}" method="POST" onsubmit="return confirm('Weet je het zeker? Dit kan niet ongedaan gemaakt worden!')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-delete text-xs  font-semibold">X</button>
+                </form>
+            </div>
+
             <span class="text-xs italic absolute bottom-4 right-4">{{$listing->created_at->format('d-m-Y H:i')}}</span>
 
-        </a>
+        </div>
         @endforeach
         @else
         <span class="text-sm italic">nog geen advertentie geplaatst</span>
         @endif
     </div>
-</div>
-@endsection
+
+    <div class="heading text-accent mt-6">Mijn biedingen</div>
+    @if($bidOn->isNotEmpty())
+    <div class="flex flex-wrap gap-4">
+        @foreach($bidOn as $listing)
+        <a class="wrap bg-bg1 p-4 w-80 min-h-80 relative hover:bg-bg1hover" href="{{ route('listing.show', $listing->id) }}">
+
+            <h2 class="heading text-accent">{{$listing->name}}</h2>
+            <div class="wrap bg-bg2 h-48 flex justify-center items-center absolute bottom-12 left-4 right-4">
+                <span class="text-sm italic">geen afbeelding geplaatst</span>
+                <span class="wrap bg-bg1 p-2 price text-text1 absolute bottom-2 right-2 z-40">€ {{$listing->formattedPrice()}}</span>
+            </div>
+            <div class="absolute grid bottom-2 left-4">
+                <span class="text-xs italic">Mijn bod: <span class="price text-xs">€{{$listing->biddings()->where('user_id', auth()->user()->id)->orderBy('bid', 'desc')->first()->formattedPrice('bid')}}</span></span>
+                @if($listing->biddings()->orderBy('bid', 'desc')->first()->user_id === auth()->user()->id)
+                <span class="text-xs font-semibold text-green-600">hoogste bod!</span>
+                @else
+                <span class="text-xs font-semibold text-red-700">niet hoogste bod!</span>
+                @endif
+            </div>
+            <span class="text-xs italic absolute bottom-4 right-4">{{$listing->created_at->format('d-m-Y H:i')}}</span>
+        </a>
+        @endforeach
+        @else
+        <span class="text-sm italic">nog niet geboden</span>
+        @endif
+    </div>
+    @endsection

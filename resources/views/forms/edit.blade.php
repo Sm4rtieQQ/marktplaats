@@ -1,8 +1,12 @@
-<form class="wrap bg-bg1 text-text1 grid p-4 gap-4" action="{{route('listing.store')}}" method="POST">
+<form class="wrap bg-bg1 text-text1 grid p-4 gap-4" action="{{ $newListing ? route('listing.store') : route('listing.update', $listing) }}" method="POST">
     @csrf
+    @if(!$newListing)
+    @method('PUT')
+    @endif
+
     <label class="font-semibold" for="name">Te koop:</label>
     <div class="grid gap-2">
-        <input class="wrap bg-bg2 p-2" name="name" id="name" type="text" placeholder="titel" />
+        <input class="wrap bg-bg2 p-2" name="name" id="name" type="text" placeholder="titel" value="{{ old('name', $listing->name) }}" />
         @error('name')
         <span class="text-red-700 text-sm">{{ $message }}</span>
         @enderror
@@ -10,7 +14,7 @@
 
     <label class="font-semibold" for="description">Omschrijving:</label>
     <div class="grid gap-2">
-        <textarea class="wrap bg-bg2 p-2 h-64" name="description" id="description" placeholder="omschrijving"></textarea>
+        <textarea class="wrap bg-bg2 p-2 h-64" name="description" id="description" placeholder="omschrijving">{{ old('description', $listing->description) }}</textarea>
         @error('description')
         <span class="text-red-700 text-sm">{{ $message }}</span>
         @enderror
@@ -27,7 +31,7 @@
                     id="price"
                     type="number"
                     step="0.01"
-                    value="{{ number_format(old('price', $price ?? 0), 2, '.', '') }}"
+                    value="{{ number_format(old('price', $listing->price ?? 0), 2, '.', '') }}"
                     onblur="this.value = parseFloat(this.value || 0).toFixed(2)" />
             </div>
             @error('price')
@@ -37,6 +41,6 @@
 
         <div class="flex gap-2 mt-4">
             <button class="btn btn-submit" type="submit">Plaatsen!</button>
-            <a class="btn btn-cancel" href="{{route('listings.index')}}">Annuleren</a>
+            <a class="btn btn-cancel" href="{{ $newListing ? route('listings.index') : route('listing.show', $listing) }}">Annuleren</a>
         </div>
 </form>

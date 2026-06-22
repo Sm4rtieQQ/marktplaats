@@ -14,7 +14,10 @@ Route::controller(ListingController::class)->group(function () {
     Route::get('/index', 'index')->name('listings.index');
     Route::get('/listing/{listing}', 'show')->name('listing.show');
     Route::get('/create', 'create')->middleware(['auth', 'verified'])->name('listing.create');
+    Route::get('listing/{listing}/edit', 'edit')->middleware(['auth', 'verified'])->name('listing.edit');
     Route::post('/listing/store', 'store')->middleware(['auth', 'verified'])->name('listing.store');
+    Route::put('/listing/{listing}', 'update')->middleware(['auth', 'verified'])->name('listing.update');
+    Route::delete('/listing/{listing}', 'destroy')->middleware(['auth', 'verified'])->name('listing.destroy');
 });
 
 Route::controller(BiddingController::class)->group(function () {
