@@ -8,11 +8,18 @@
         "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
-    --color-bg1: oklch(92.9% 0.013 255.508); /* slate-200 */
-    --color-bg1hover: oklch(86.9% 0.022 252.894); /* slate-300 */
-    --color-bg2: oklch(96.8% 0.007 247.896); /* slate-50 */
-    --color-text1: oklch(30.2% 0.056 229.695); /* cyan-950 */
-    --color-accent: oklch(45% 0.085 224.283); /* cyan-800 */
+    --color-bg1: oklch(92.9% 0.013 255.508);
+    /* slate-200 */
+    --color-bg1hover: oklch(86.9% 0.022 252.894);
+    /* slate-300 */
+    --color-bg2: oklch(96.8% 0.007 247.896);
+    /* slate-50 */
+    --color-bg3: oklch(30.2% 0.056 229.695);
+    /* cyan-950 */
+    --color-text1: oklch(30.2% 0.056 229.695);
+    /* cyan-950 */
+    --color-accent: oklch(45% 0.085 224.283);
+    /* cyan-800 */
 }
 
 @layer components {

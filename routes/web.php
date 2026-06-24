@@ -42,4 +42,8 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/email/verify', 'emailnotice')->middleware('auth')->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', 'emailfulfill')->middleware(['auth', 'signed'])->name('verification.verify');
     Route::post('/email/vefification-notification', 'emailsendlink')->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+    Route::get('/forgot-password', 'passwordrequest')->middleware('guest')->name('password.request');
+    Route::post('/forgot-password', 'emailpassword')->middleware('guest')->name('password.email');
+    Route::get('/reset-password/{token}', 'passwordreset')->middleware('guest')->name('password.reset');
 });

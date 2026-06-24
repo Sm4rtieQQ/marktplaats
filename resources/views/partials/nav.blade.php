@@ -13,7 +13,7 @@
         @else
         <form action="{{route('user.logout')}}" class="ml-auto" method="POST">
             @csrf
-            <button type="submit" class="heading text-xl text-accent px-4 py-1 rounded-md hover:bg-bg1">Uitloggen</button>
+            <button type="submit" class="heading text-xl text-accent px-4 py-1 rounded-md hover:bg-bg1 cursor-pointer">Uitloggen</button>
         </form>
         @endguest
 

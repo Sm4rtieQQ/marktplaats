@@ -3,11 +3,11 @@
 @section('title', 'Inloggen')
 
 @section('content')
-<div class="w-[500px] mx-auto">
-    <h1 class="heading text-accent">Inloggen</h1>
+<div class="w-[500px] mx-auto grid gap-2">
 
     <form action="{{route('user.auth')}}" method="POST">
         @csrf
+        <h1 class="heading text-accent">Inloggen</h1>
         <div class="wrap bg-bg1 p-4">
 
             <div class="grid grid-cols-[120px_auto] gap-y-4">
@@ -35,5 +35,6 @@
             <a class="btn btn-cancel" href="{{route('user.register')}}">Registreren</a>
         </div>
     </form>
+    <a class="text-sm underline" href="{{ route('password.request') }}">Wachtwoord vergeten?</a>
 </div>
 @endsection

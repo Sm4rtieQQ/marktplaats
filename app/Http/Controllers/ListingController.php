@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ListingRequest;
 use App\Models\Bidding;
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Listing;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ class ListingController extends Controller
     public function index()
     {
         $listings = Listing::orderBy('created_at', 'desc')->get();
+
         return view('index', compact('listings'));
     }
 
@@ -26,9 +28,11 @@ class ListingController extends Controller
     public function create()
     {
         $listing = new Listing();
+        $categories = Category::orderBy('name')->get();
+
         $newListing = true;
 
-        return view('listings.create', compact('listing', 'newListing'));
+        return view('listings.create', compact('listing', 'categories', 'newListing'));
     }
 
     /**
@@ -36,12 +40,15 @@ class ListingController extends Controller
      */
     public function store(ListingRequest $request)
     {
-        Listing::create([
+        $listing = Listing::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'price' => $request->input('price'),
             'user_id' => Auth::user()->id,
         ]);
+
+        $categories = $request->input('categories', []);
+        $listing->categories()->attach($categories);
 
         return redirect()->route('listings.index');
     }
@@ -52,9 +59,10 @@ class ListingController extends Controller
     public function show(Listing $listing)
     {
         $biddings = Bidding::where('listing_id', $listing->id)->orderBy('bid', 'desc')->get();
+        $categories = $listing->categories()->orderBy('name')->get();
         $comments = Comment::where('listing_id', $listing->id)->orderBy('created_at', 'asc')->get();
 
-        return view('listings.show', compact('listing', 'biddings', 'comments'));
+        return view('listings.show', compact('listing', 'biddings', 'categories', 'comments'));
     }
 
     /**
@@ -64,10 +72,12 @@ class ListingController extends Controller
     {
         Gate::authorize('edit', $listing);
 
+        $categories = Category::orderBy('name')->get();
         $edit = true;
         $newListing = false;
+        $selectedCategories = $listing->categories->pluck('id')->toArray();
 
-        return view('listings.show', compact('listing', 'edit', 'newListing'));
+        return view('listings.show', compact('listing', 'categories', 'edit', 'newListing', 'selectedCategories'));
     }
 
     /**
@@ -82,8 +92,10 @@ class ListingController extends Controller
             'description' => $request->input('description'),
             'price' => $request->input('price'),
         ];
+        $categories = $request->input('categories', []);
 
         $listing->update($newData);
+        $listing->categories()->sync($categories);
 
         return redirect()->route('listing.show', $listing);
     }

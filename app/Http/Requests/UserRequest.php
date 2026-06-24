@@ -31,7 +31,7 @@ class UserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'A.u.b. een geldig email adres invoeren.',
+            'email' => 'A.u.b. een geldig email adres invoeren.',
             'password.required' => 'A.u.b. een wachtwoord invoeren.',
         ];
     }

@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 
 class UserController extends Controller
 {
@@ -44,12 +45,12 @@ class UserController extends Controller
 
     public function show()
     {
-        return view('user.login');
+        return view('auth.login');
     }
 
     public function register()
     {
-        return view('user.register');
+        return view('auth.register');
     }
 
     public function dashboard()
@@ -83,7 +84,7 @@ class UserController extends Controller
 
     public function emailnotice()
     {
-        return view('user.verificationNotice');
+        return view('auth.verificationNotice');
     }
 
     public function emailfulfill(EmailVerificationRequest $request)
@@ -100,5 +101,26 @@ class UserController extends Controller
         $request->user()->sendEmailVerificationNotification();
 
         return back()->with('message', 'Bevestigingslink verstuurd!');
+    }
+
+    public function passwordrequest()
+    {
+        return view('auth.forgot-password');
+    }
+
+    public function emailpassword(UserRequest $request)
+    {
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::ResetLinkSent
+            ? back()->with('success', 'Resetlink verstuurd!')
+            : back();
+    }
+
+    public function passwordreset(string $token)
+    {
+        return view('auth.reset-password', ['token' => $token]);
     }
 }

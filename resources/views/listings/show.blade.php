@@ -15,12 +15,22 @@
 
         <div class="wrap bg-bg1 p-4 relative">
             <h2 class="heading text-accent mb-2">{{$listing->name}}</h2>
+
+            <div class="mb-2">
+                @foreach($categories as $category)
+                <span class="wrap px-2 py-1 bg-bg2 text-xs self-center">{{ $category->name }}</span>
+                @endforeach
+            </div>
+
             <span class="absolute top-4 right-4 text-xs italic">{{$listing->created_at->format('d-m-y h:i')}}</span>
+
             <p class="mb-16">{!! nl2br(e($listing->description)) !!}</p>
+
             <div class="absolute bottom-4 left-4 grid">
                 <span class="text-sm">Aangeboden door:</span>
                 <span class="font-semibold">{{$listing->user->name}}</span>
             </div>
+
             @can('edit', $listing)
             <div class="absolute bottom-4 right-4 grid">
                 <a class="btn btn-submit" href="{{ route('listing.edit', $listing) }}">Aanpassen</a>
