@@ -7,6 +7,7 @@ use App\Models\Bidding;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Listing;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,11 +16,21 @@ class ListingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $listings = Listing::orderBy('created_at', 'desc')->get();
+        $categories = Category::orderBy('name', 'asc')->get();
+        $categoryId = $request->input('category');
+        $selectedCategory = Category::find($categoryId);
 
-        return view('index', compact('listings'));
+        $listings = Listing::orderBy('created_at', 'desc')
+            ->when(!empty($categoryId), function ($query) use ($categoryId) {
+                $query->whereHas('categories', function ($query) use ($categoryId) {
+                    $query->where('categories.id', $categoryId);
+                });
+            })
+            ->paginate(12);
+
+        return view('index', compact('listings', 'categories', 'selectedCategory'));
     }
 
     /**np

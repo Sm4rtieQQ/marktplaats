@@ -16,8 +16,8 @@
     <div class="flex flex-wrap gap-4">
         @foreach($listings as $listing)
         <div class="wrap bg-bg1 p-4 w-80 min-h-80 relative">
-            <div class="flex gap-1">
-                <h2 class="heading text-accent mr-2">{{$listing->name}}</h2>
+            <h2 class="heading text-accent mb-2">{{$listing->name}}</h2>
+            <div class="flex flex-wrap gap-1 mb-2">
                 @foreach($listing->categories as $category)
                 <span class="wrap px-2 py-1 bg-bg2 text-xs self-center">{{ $category->name }}</span>
                 @endforeach
@@ -56,14 +56,14 @@
 
             <div class="min-h-20 mb-2 grid">
                 <h2 class="heading text-accent">{{$listing->name}}</h2>
-                <div class="self-end">
+                <div class="self-end flex flex-wrap gap-1">
                     @foreach($listing->categories->sortBy('name') as $category)
                     <span class="wrap px-2 py-1 bg-bg2 text-xs self-center">{{ $category->name }}</span>
                     @endforeach
                 </div>
             </div>
 
-            <div class="wrap bg-bg2 h-48 mb-2 flex justify-center items-center">
+            <div class="wrap bg-bg2 h-48 mb-2 relative flex justify-center items-center">
                 <span class="text-sm italic">geen afbeelding geplaatst</span>
                 <span class="wrap bg-bg1 p-2 price text-text1 absolute bottom-2 right-2 z-40">€ {{$listing->formattedPrice()}}</span>
             </div>

@@ -8,9 +8,6 @@
     <form action="{{ route('password.email') }}" method="POST">
         @csrf
         <h1 class="heading text-accent">Nieuw wachtwoord aanvragen</h1>
-        @if(session('success'))
-        <span class="text-green-600 text-sm">{{ $message }}</span>
-        @endif
         <div class="wrap bg-bg1 p-4">
             <div class="grid grid-cols-[120px_auto] gap-y-4">
 
@@ -20,6 +17,9 @@
                     @error('email')
                     <span class="text-red-700 text-sm">{{ $message }}</span>
                     @enderror
+                    @if(session('status'))
+                    <span class="text-green-600 text-sm">{{ session('status') }}</span>
+                    @endif
                 </div>
 
             </div>

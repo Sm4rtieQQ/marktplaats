@@ -8,6 +8,9 @@
     <form action="{{route('user.auth')}}" method="POST">
         @csrf
         <h1 class="heading text-accent">Inloggen</h1>
+        @if(session('status'))
+        <span class="text-green-600 text-sm">{{ session('status') }}</span>
+        @endif
         <div class="wrap bg-bg1 p-4">
 
             <div class="grid grid-cols-[120px_auto] gap-y-4">
