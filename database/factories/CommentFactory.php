@@ -23,6 +23,7 @@ class CommentFactory extends Factory
             'listing_id' => Listing::inRandomOrder()->first()->id,
             'user_id' => User::inRandomOrder()->first()->id,
             'text' => fake()->paragraph(),
+            'created_at' => fake()->dateTimeBetween('-1 month'),
         ];
     }
 }

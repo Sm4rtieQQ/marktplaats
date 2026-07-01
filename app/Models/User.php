@@ -46,4 +46,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         return $this->hasMany(Listing::class);
     }
+
+    public function messages_send()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function messages_received()
+    {
+        return $this->hasMany(Message::class);
+    }
 }

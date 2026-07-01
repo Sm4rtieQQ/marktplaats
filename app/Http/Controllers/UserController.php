@@ -27,7 +27,7 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->route('user.dashboard')->with('success', 'Succesvol ingelogd.');
+            return redirect()->route('user.dashboard')->with('status', 'Succesvol ingelogd.');
         }
 
         return back()->withErrors([
@@ -86,6 +86,10 @@ class UserController extends Controller
 
     public function emailnotice()
     {
+        if (Auth::user()->email_verified_at) {
+            return redirect()->route('user.dashboard')->with('status', 'Email adres is al bevestigd!');
+        }
+
         return view('auth.verificationNotice');
     }
 
@@ -95,7 +99,7 @@ class UserController extends Controller
 
         Mail::send(new EmailConfirmation($request->user()));
 
-        return redirect()->route('user.dashboard')->with('success', 'Email bevestigd!');
+        return redirect()->route('user.dashboard')->with('status', 'Email bevestigd!');
     }
 
     public function emailsendlink(Request $request)

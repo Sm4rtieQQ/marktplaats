@@ -4,8 +4,8 @@
 
 @section('content')
 
-@if(session('success'))
-<span class="text-green-600 text-sm">{{session('success')}}</span>
+@if(session('status'))
+<span class="text-green-600 text-sm">{{session('status')}}</span>
 @endif
 
 <div class="grid gap-4">

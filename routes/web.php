@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BiddingController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
@@ -8,6 +9,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()->route('listings.index');
+});
+
+Route::controller(BiddingController::class)->group(function () {
+    Route::post('/listing/{listing}/bid/store', 'store')->middleware(['auth', 'verified'])->name('bid.store');
+    Route::delete('/listing/bid/{bidding}', 'destroy')->middleware(['auth', 'verified'])->name('bid.destroy');
+});
+
+Route::controller(ChatController::class)->group(function () {
+    Route::get('/chats', 'index')->middleware(['auth', 'verified'])->name('chat.index');
+    Route::get('/chats/{chat}', 'show')->middleware(['auth', 'verified'])->name('chat.show');
+});
+
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/listing/{listing}/comment', 'store')->middleware(['auth', 'verified'])->name('comment.store');
+    Route::delete('/listing/{comment}/delete', 'destroy')->middleware(['auth', 'verified'])->name('comment.destroy');
 });
 
 Route::controller(ListingController::class)->group(function () {
@@ -18,16 +34,6 @@ Route::controller(ListingController::class)->group(function () {
     Route::post('/listing/store', 'store')->middleware(['auth', 'verified'])->name('listing.store');
     Route::put('/listing/{listing}', 'update')->middleware(['auth', 'verified'])->name('listing.update');
     Route::delete('/listing/{listing}', 'destroy')->middleware(['auth', 'verified'])->name('listing.destroy');
-});
-
-Route::controller(BiddingController::class)->group(function () {
-    Route::post('/listing/{listing}/bid/store', 'store')->middleware(['auth', 'verified'])->name('bid.store');
-    Route::delete('/listing/bid/{bidding}', 'destroy')->middleware(['auth', 'verified'])->name('bid.destroy');
-});
-
-Route::controller(CommentController::class)->group(function () {
-    Route::post('/listing/{listing}/comment', 'store')->middleware(['auth', 'verified'])->name('comment.store');
-    Route::delete('/listing/{comment}/delete', 'destroy')->middleware(['auth', 'verified'])->name('comment.destroy');
 });
 
 Route::controller(UserController::class)->group(function () {

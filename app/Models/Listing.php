@@ -29,15 +29,13 @@ class Listing extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    protected $fillable = [
-        'name',
-        'description',
-        'price',
-        'user_id',
-    ];
 }

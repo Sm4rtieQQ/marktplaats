@@ -2,14 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\Chat;
 use App\Models\Listing;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Listing>
+ * @extends Factory<Chat>
  */
-class ListingFactory extends Factory
+class ChatFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,11 +19,14 @@ class ListingFactory extends Factory
      */
     public function definition(): array
     {
+        $user1 = User::inRandomOrder()->first()->id;
+        $user2 = User::inRandomOrder()->whereNotIn('id', [$user1])->first()->id;
+
+        $userIds = collect([$user1, $user2])->sort()->implode('_');
+
         return [
-            'name' => fake()->sentence(4),
-            'description' => fake()->paragraph(),
-            'price' => fake()->randomfloat(2, 5, 250),
-            'user_id' => User::inRandomOrder()->first()->id,
+            'listing_id' => Listing::inRandomOrder()->first()->id,
+            'user_ids' => $userIds,
             'created_at' => fake()->dateTimeBetween('-1 month'),
         ];
     }
