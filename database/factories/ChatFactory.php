@@ -19,14 +19,23 @@ class ChatFactory extends Factory
      */
     public function definition(): array
     {
-        $user1 = User::inRandomOrder()->first()->id;
-        $user2 = User::inRandomOrder()->whereNotIn('id', [$user1])->first()->id;
+        $user1 = Listing::inRandomOrder()
+            ->first()
+            ->user_id;
 
-        $userIds = collect([$user1, $user2])->sort()->implode('_');
+        $listing = Listing::where('user_id', $user1)
+            ->inRandomOrder()
+            ->first();
+
+        $user2 = User::whereNotIn('id', [$user1])
+            ->inRandomOrder()
+            ->first()
+            ->id;
 
         return [
-            'listing_id' => Listing::inRandomOrder()->first()->id,
-            'user_ids' => $userIds,
+            'listing_id' => $listing->id,
+            'receiver_uid' => $user1,
+            'sender_uid' => $user2,
             'created_at' => fake()->dateTimeBetween('-1 month'),
         ];
     }

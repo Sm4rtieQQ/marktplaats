@@ -24,14 +24,14 @@ class Listing extends Model
         return $this->belongsToMany(Category::class);
     }
 
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
-    }
-
-    public function messages()
-    {
-        return $this->hasMany(Message::class);
     }
 
     public function user()

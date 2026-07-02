@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['chat_id', 'from_uid', 'to_uid', 'text'])]
+#[Fillable(['chat_id', 'user_id', 'text'])]
 
 class Message extends Model
 {
@@ -17,18 +17,8 @@ class Message extends Model
         return $this->belongsTo(Chat::class);
     }
 
-    public function listing()
+    public function user()
     {
-        return $this->belongsTo(Listing::class);
-    }
-
-    public function from_uid()
-    {
-        return $this->belongsTo(User::class, 'from_uid');
-    }
-
-    public function to_uid()
-    {
-        return $this->belongsTo(User::class, 'to_uid');
+        return $this->belongsTo(User::class);
     }
 }

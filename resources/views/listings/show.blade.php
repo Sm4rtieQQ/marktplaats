@@ -31,6 +31,12 @@
                 <span class="font-semibold">{{$listing->user->name}}</span>
             </div>
 
+            @can('chat', $listing)
+            <form class="absolute bottom-4 right-4 grid" action="{{ route('chat.store', $listing) }}" method="POST">
+                @csrf
+                <button class="btn btn-submit">Chat met de verkoper</button>
+            </form>
+            @endcan
             @can('edit', $listing)
             <div class="absolute bottom-4 right-4 grid">
                 <a class="btn btn-submit" href="{{ route('listing.edit', $listing) }}">Aanpassen</a>

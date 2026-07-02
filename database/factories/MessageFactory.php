@@ -20,18 +20,11 @@ class MessageFactory extends Factory
     {
         $chat = Chat::inRandomOrder()->first();
 
-        $userIds = explode('_', $chat->user_ids);
-        $fromUid = $userIds[0];
-        $toUid = $userIds[1];
-
-        if (rand(0, 1)) {
-            [$fromUid, $toUid] = [$toUid, $fromUid];
-        }
+        $userId = random_int(0, 1) ? $chat->sender_uid : $chat->receiver_uid;
 
         return [
             'chat_id' => $chat->id,
-            'from_uid' => $fromUid,
-            'to_uid' => $toUid,
+            'user_id' => $userId,
             'text' => fake()->sentence(),
             'created_at' => fake()->dateTimeBetween('-1 month'),
         ];

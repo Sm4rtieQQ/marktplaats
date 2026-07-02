@@ -4,6 +4,7 @@ use App\Http\Controllers\BiddingController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +19,8 @@ Route::controller(BiddingController::class)->group(function () {
 
 Route::controller(ChatController::class)->group(function () {
     Route::get('/chats', 'index')->middleware(['auth', 'verified'])->name('chat.index');
-    Route::get('/chats/{chat}', 'show')->middleware(['auth', 'verified'])->name('chat.show');
+    Route::get('/chat/{chat}', 'show')->middleware(['auth', 'verified'])->name('chat.show');
+    Route::post('/listing/{listing}/newChat', 'store')->middleware(['auth', 'verified'])->name('chat.store');
 });
 
 Route::controller(CommentController::class)->group(function () {
@@ -28,12 +30,16 @@ Route::controller(CommentController::class)->group(function () {
 
 Route::controller(ListingController::class)->group(function () {
     Route::get('/index', 'index')->name('listings.index');
+    Route::get('/listing/create', 'create')->middleware(['auth', 'verified'])->name('listing.create');
     Route::get('/listing/{listing}', 'show')->name('listing.show');
-    Route::get('/create', 'create')->middleware(['auth', 'verified'])->name('listing.create');
-    Route::get('listing/{listing}/edit', 'edit')->middleware(['auth', 'verified'])->name('listing.edit');
+    Route::get('/listing/{listing}/edit', 'edit')->middleware(['auth', 'verified'])->name('listing.edit');
     Route::post('/listing/store', 'store')->middleware(['auth', 'verified'])->name('listing.store');
     Route::put('/listing/{listing}', 'update')->middleware(['auth', 'verified'])->name('listing.update');
     Route::delete('/listing/{listing}', 'destroy')->middleware(['auth', 'verified'])->name('listing.destroy');
+});
+
+Route::controller(MessageController::class)->group(function () {
+    Route::post('/chat/{chat}', 'store')->middleware(['auth', 'verified'])->name('message.store');
 });
 
 Route::controller(UserController::class)->group(function () {

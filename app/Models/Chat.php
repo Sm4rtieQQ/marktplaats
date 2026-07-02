@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['listing_id', 'user_ids'])]
+#[Fillable(['listing_id', 'receiver_uid', 'sender_uid'])]
 
 class Chat extends Model
 {
@@ -22,8 +22,13 @@ class Chat extends Model
         return $this->hasMany(Message::class);
     }
 
-    public function users()
+    public function receiver()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class, 'receiver_uid');
+    }
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_uid');
     }
 }

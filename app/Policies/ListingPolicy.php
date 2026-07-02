@@ -11,4 +11,9 @@ class ListingPolicy
     {
         return $user->id === $listing->user_id;
     }
+
+    public function chat(User $user, Listing $listing)
+    {
+        return $user->id !== $listing->user_id;
+    }
 }

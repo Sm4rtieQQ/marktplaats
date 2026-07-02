@@ -57,7 +57,6 @@ class ListingController extends Controller
             'price' => $request->input('price'),
             'user_id' => Auth::user()->id,
         ]);
-
         $categories = $request->input('categories', []);
         $listing->categories()->attach($categories);
 
@@ -118,8 +117,6 @@ class ListingController extends Controller
     {
         Gate::authorize('edit', $listing);
 
-        $listing->biddings()->delete();
-        $listing->comments()->delete();
         $listing->delete();
 
         return redirect()->route('user.dashboard');

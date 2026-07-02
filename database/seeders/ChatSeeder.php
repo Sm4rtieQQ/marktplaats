@@ -13,10 +13,6 @@ class ChatSeeder extends Seeder
      */
     public function run(): void
     {
-        Chat::factory(30)->create()->each(function ($chat) {
-            $userIds = explode('_', $chat->user_ids);
-
-            $chat->users()->attach($userIds);
-        });
+        Chat::factory(30)->create();
     }
 }

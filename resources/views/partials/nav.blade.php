@@ -6,6 +6,7 @@
         @auth
         <a class="heading text-xl text-accent px-4 py-1 rounded-md hover:bg-bg1" href="{{ route('listing.create') }}">Nieuwe advertentie</a>
         <a class="heading text-xl text-accent px-4 py-1 rounded-md hover:bg-bg1" href="{{ route('user.dashboard') }}">Dashboard</a>
+        <a class="heading text-xl text-accent px-4 py-1 rounded-md hover:bg-bg1" href="{{ route('chat.index') }}">Chats</a>
         @endauth
 
         @guest
