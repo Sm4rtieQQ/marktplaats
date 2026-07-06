@@ -13,29 +13,23 @@ use Illuminate\Support\Facades\Gate;
 
 class ListingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $categories = Category::orderBy('name', 'asc')->get();
         $categoryId = $request->input('category');
         $selectedCategory = Category::find($categoryId);
 
-        $listings = Listing::orderBy('created_at', 'desc')
-            ->when(!empty($categoryId), function ($query) use ($categoryId) {
-                $query->whereHas('categories', function ($query) use ($categoryId) {
-                    $query->where('categories.id', $categoryId);
-                });
-            })
+        $listings = Listing::when(!empty($categoryId), function ($query) use ($categoryId) {
+            $query->whereHas('categories', function ($query) use ($categoryId) {
+                $query->where('categories.id', $categoryId);
+            });
+        })
+            ->orderByRaw('promoted DESC, updated_at DESC')
             ->paginate(12);
 
         return view('index', compact('listings', 'categories', 'selectedCategory'));
     }
 
-    /**np
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $listing = new Listing();
@@ -46,9 +40,6 @@ class ListingController extends Controller
         return view('listings.create', compact('listing', 'categories', 'newListing'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(ListingRequest $request)
     {
         $listing = Listing::create([
@@ -63,9 +54,6 @@ class ListingController extends Controller
         return redirect()->route('listings.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Listing $listing)
     {
         $biddings = Bidding::where('listing_id', $listing->id)->orderBy('bid', 'desc')->get();
@@ -75,9 +63,6 @@ class ListingController extends Controller
         return view('listings.show', compact('listing', 'biddings', 'categories', 'comments'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Listing $listing)
     {
         Gate::authorize('edit', $listing);
@@ -90,9 +75,22 @@ class ListingController extends Controller
         return view('listings.show', compact('listing', 'categories', 'edit', 'newListing', 'selectedCategories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    public function shop(Listing $listing)
+    {
+        return view('shop.promote', compact('listing'));
+    }
+
+    public function promote(Listing $listing)
+    {
+        Gate::authorize('edit', $listing);
+
+        $listing->update([
+            'promoted' => true,
+        ]);
+
+        return redirect()->route('user.dashboard', $listing);
+    }
+
     public function update(ListingRequest $request, Listing $listing)
     {
         Gate::authorize('edit', $listing);
@@ -110,9 +108,6 @@ class ListingController extends Controller
         return redirect()->route('listing.show', $listing);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Listing $listing)
     {
         Gate::authorize('edit', $listing);

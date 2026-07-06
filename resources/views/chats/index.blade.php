@@ -11,7 +11,10 @@
             @foreach( $receivedChats as $chat )
             <a class="wrap bg-bg1 hover:bg-bg1hover cursor-pointer p-2 relative grid gap-2" href="{{ route('chat.show', $chat->id) }}">
                 <h4 class="text-accent font-semibold">{{ $chat->sender->name }}</h4>
-                <span class="absolute top-2 right-2 text-xs italic">{{ $chat->updated_at->format('d-m H:i') }}</span>
+                <div class="absolute top-2 right-2 text-xs">
+                    <span>Laatste bericht:</span><br />
+                    <span class="italic">{{ date('d-m-Y H:i', strtotime($chat->messages_max_created_at)) }}</span>
+                </div>
                 <span class="font-semibold">{{ $chat->listing->name }}</span>
             </a>
             @endforeach
@@ -28,7 +31,10 @@
             @foreach( $sendChats as $chat )
             <a class="wrap bg-bg1 hover:bg-bg1hover cursor-pointer p-2 relative grid gap-2" href="{{ route('chat.show', $chat->id) }}">
                 <h4 class="text-accent font-semibold">{{ $chat->receiver->name }}</h4>
-                <span class="absolute top-2 right-2 text-xs italic">{{ $chat->updated_at->format('d-m H:i') }}</span>
+                <div class="absolute top-2 right-2 text-xs">
+                    <span>Laatste bericht:</span><br />
+                    <span class="italic">{{ date('d-m-Y H:i', strtotime($chat->messages_max_created_at)) }}</span>
+                </div>
                 <span class="font-semibold">{{ $chat->listing->name }}</span>
             </a>
             @endforeach

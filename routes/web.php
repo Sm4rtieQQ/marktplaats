@@ -35,6 +35,8 @@ Route::controller(ListingController::class)->group(function () {
     Route::get('/listing/{listing}/edit', 'edit')->middleware(['auth', 'verified'])->name('listing.edit');
     Route::post('/listing/store', 'store')->middleware(['auth', 'verified'])->name('listing.store');
     Route::put('/listing/{listing}', 'update')->middleware(['auth', 'verified'])->name('listing.update');
+    Route::get('/listing/{listing}/shop', 'shop')->middleware(['auth', 'verified'])->name('listing.shop');
+    Route::put('/listing/{listing}/promote', 'promote')->middleware(['auth', 'verified'])->name('listing.promote');
     Route::delete('/listing/{listing}', 'destroy')->middleware(['auth', 'verified'])->name('listing.destroy');
 });
 
@@ -44,6 +46,7 @@ Route::controller(MessageController::class)->group(function () {
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->middleware('auth')->name('user.dashboard');
+    Route::put('/dashboard/{user}', 'toggleEmailNotifications')->middleware(['auth', 'verified'])->name('user.notifications');
 
     Route::get('/login', 'show')->name('login');
     Route::post('/login/auth', 'authenticate')->name('user.auth');

@@ -57,13 +57,25 @@ class UserController extends Controller
 
     public function dashboard()
     {
-        $listings = Listing::where('user_id', Auth::user()->id)->get();
+        $user = Auth::user();
+        $listings = Listing::where('user_id', $user->id)->get();
 
-        $bidOn = Listing::whereHas('biddings', function ($query) {
-            $query->where('user_id', Auth::user()->id);
+        $bidOn = Listing::whereHas('biddings', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
         })->get();
 
-        return view('user.dashboard', compact('listings', 'bidOn'));
+        return view('user.dashboard', compact('listings', 'bidOn', 'user'));
+    }
+
+    public function toggleEmailNotifications(User $user)
+    {
+        $notifications = $user->notifications ? false : true;
+
+        $user->update([
+            'notifications' => $notifications,
+        ]);
+
+        return redirect()->back();
     }
 
     public function store(RegisterRequest $request)
@@ -152,8 +164,6 @@ class UserController extends Controller
                 event(new PasswordReset($user));
             }
         );
-
-
 
         return $status === Password::PasswordReset
             ? redirect()->route('login')->with('status', __($status))

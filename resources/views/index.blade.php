@@ -14,7 +14,9 @@
 
                 <div class="min-h-20 mb-2 grid">
                     <h2 class="heading text-accent">{{ $listing->name }}</h2>
-
+                    @if($listing->promoted)
+                    <span class="text-xs italic">Gepromoot</span>
+                    @endif
                     <div class="flex flex-wrap self-end gap-1">
                         @foreach($listing->categories->sortBy('name') as $category)
                         <span class="wrap px-2 py-1 bg-bg2 text-xs self-center">{{ $category->name }}</span>

@@ -23,6 +23,7 @@ class ListingFactory extends Factory
             'description' => fake()->paragraph(),
             'price' => fake()->randomfloat(2, 5, 250),
             'user_id' => User::inRandomOrder()->first()->id,
+            'promoted' => fake()->boolean(20),
             'created_at' => fake()->dateTimeBetween('-1 month'),
         ];
     }
