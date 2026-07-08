@@ -5,6 +5,12 @@
 @section('content')
 <h1 class="heading text-accent mb-4">Advertenties</h1>
 
+@if($listings->isNotEmpty())
+<span class="text-xs italic">Gevonden advertenties: {{ $listings->total() }}</span>
+@else
+<span class="text-xs italic">Geen advertenties gevonden.</span>
+@endif
+
 <div class="grid grid-cols-[auto_140px]">
     <div>
         <div class="flex flex-wrap gap-4 mb-4">

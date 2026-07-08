@@ -2,32 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterRequest;
 use App\Http\Requests\ListingRequest;
 use App\Models\Bidding;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Listing;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class ListingController extends Controller
 {
-    public function index(Request $request)
+    public function index(FilterRequest $request)
     {
         $categories = Category::orderBy('name', 'asc')->get();
         $categoryId = $request->input('category');
         $selectedCategory = Category::find($categoryId);
+
+        $keyword = $request->input('keyword');
 
         $listings = Listing::when(!empty($categoryId), function ($query) use ($categoryId) {
             $query->whereHas('categories', function ($query) use ($categoryId) {
                 $query->where('categories.id', $categoryId);
             });
         })
+            ->when(!empty($keyword), function ($query) use ($keyword) {
+                $query->where('description', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('name', 'LIKE', '%' . $keyword . '%');
+            })
             ->orderByRaw('promoted DESC, updated_at DESC')
             ->paginate(12);
 
-        return view('index', compact('listings', 'categories', 'selectedCategory'));
+        return view('index', compact('listings', 'categories', 'selectedCategory', 'keyword'));
     }
 
     public function create()
