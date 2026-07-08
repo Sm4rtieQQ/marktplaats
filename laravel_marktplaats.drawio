@@ -4,11 +4,30 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="r88X1aajVwNmWPVDjVxC-1" edge="1" parent="1" source="BKBVLmKVwQX1hEaAQKOi-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="BKBVLmKVwQX1hEaAQKOi-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="BKBVLmKVwQX1hEaAQKOi-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=10;" value="&lt;div&gt;&lt;b&gt;View&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;/forms/edit.blade.php&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Gebruiker opent het &#39;edit&#39; formulier bij het aanmaken van een nieuwe advertentie of het wijzigen van een bestaande&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Wanneer een bestaand artikel wordt bewerkt worden de reeds gekoppelde categorieën automatisch geselecteerd in het formulier&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="320" width="200" x="40" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="BKBVLmKVwQX1hEaAQKOi-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=10;" value="" vertex="1">
-          <mxGeometry height="80" width="200" x="280" y="80" as="geometry" />
+        <mxCell id="BKBVLmKVwQX1hEaAQKOi-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=10;" value="&lt;div&gt;&lt;b&gt;Request&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;ListingRequest.php&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;&lt;br&gt;&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;&lt;br&gt;&lt;/i&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="130" x="360" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="r88X1aajVwNmWPVDjVxC-2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Advertentie opslaan&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="130" x="250" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="r88X1aajVwNmWPVDjVxC-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacing=10;" value="&lt;div&gt;&lt;b&gt;Controller&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;ListingController.php&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;De geselecteerde categoriën worden m.b.v. een tussentabel gekoppeld aan het advertentie.&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Wanneer het gaat om het aanpassen van een advertentie, wordt de tussentabel gesynchroniseerd, zodat er geen dubbelen in worden opgeslagen&lt;/div&gt;" vertex="1">
+          <mxGeometry height="320" width="200" x="600" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="r88X1aajVwNmWPVDjVxC-5" edge="1" parent="1" source="BKBVLmKVwQX1hEaAQKOi-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.005;entryY=0.094;entryDx=0;entryDy=0;entryPerimeter=0;" target="r88X1aajVwNmWPVDjVxC-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r88X1aajVwNmWPVDjVxC-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Advertentie opslaan&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="130" x="500" y="100" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
