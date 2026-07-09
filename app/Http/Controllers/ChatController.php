@@ -14,15 +14,15 @@ class ChatController extends Controller
     {
         $userId = Auth::user()->id;
         $receivedChats = Chat::where('receiver_uid', $userId)
-        ->whereHas('messages')
-        ->orderBy('updated_at', 'desc')
-        ->get();
+            ->whereHas('messages')
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
         $sendChats = Chat::where('sender_uid', $userId)
-        ->whereHas('messages')
-        ->withMax('messages', 'created_at')
-        ->orderByDesc('messages_max_created_at')
-        ->get();
+            ->whereHas('messages')
+            ->withMax('messages', 'created_at')
+            ->orderByDesc('messages_max_created_at')
+            ->get();
 
         return view('chats.index', compact('receivedChats', 'sendChats'));
     }

@@ -12,37 +12,50 @@ Route::get('/', function () {
     return redirect()->route('listings.index');
 });
 
-Route::controller(BiddingController::class)->group(function () {
-    Route::post('/listing/{listing}/bid/store', 'store')->middleware(['auth', 'verified'])->name('bid.store');
-    Route::delete('/listing/bid/{bidding}', 'destroy')->middleware(['auth', 'verified'])->name('bid.destroy');
-});
+Route::controller(BiddingController::class)
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::post('/listing/{listing}/bid/store', 'store')->name('bid.store');
+        Route::delete('/listing/bid/{bidding}', 'destroy')->name('bid.destroy');
+    });
 
-Route::controller(ChatController::class)->group(function () {
-    Route::get('/chats', 'index')->middleware(['auth', 'verified'])->name('chat.index');
-    Route::get('/chat/{chat}', 'show')->middleware(['auth', 'verified'])->name('chat.show');
-    Route::post('/listing/{listing}/newChat', 'store')->middleware(['auth', 'verified'])->name('chat.store');
-});
+Route::controller(ChatController::class)
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::get('/chats', 'index')->name('chat.index');
+        Route::get('/chat/{chat}', 'show')->name('chat.show');
+        Route::post('/listing/{listing}/newChat', 'store')->name('chat.store');
+    });
 
-Route::controller(CommentController::class)->group(function () {
-    Route::post('/listing/{listing}/comment', 'store')->middleware(['auth', 'verified'])->name('comment.store');
-    Route::delete('/listing/{comment}/delete', 'destroy')->middleware(['auth', 'verified'])->name('comment.destroy');
-});
+Route::controller(CommentController::class)
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::post('/listing/{listing}/comment', 'store')->name('comment.store');
+        Route::delete('/listing/{comment}/delete', 'destroy')->name('comment.destroy');
+    });
+
+Route::controller(ListingController::class)
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::get('/listing/create', 'create')->name('listing.create');
+        Route::get('/listing/{listing}/edit', 'edit')->name('listing.edit');
+        Route::post('/listing/store', 'store')->name('listing.store');
+        Route::put('/listing/{listing}', 'update')->name('listing.update');
+        Route::get('/listing/{listing}/shop', 'shop')->name('listing.shop');
+        Route::put('/listing/{listing}/promote', 'promote')->name('listing.promote');
+        Route::delete('/listing/{listing}', 'destroy')->name('listing.destroy');
+    });
 
 Route::controller(ListingController::class)->group(function () {
     Route::get('/index', 'index')->name('listings.index');
-    Route::get('/listing/create', 'create')->middleware(['auth', 'verified'])->name('listing.create');
     Route::get('/listing/{listing}', 'show')->name('listing.show');
-    Route::get('/listing/{listing}/edit', 'edit')->middleware(['auth', 'verified'])->name('listing.edit');
-    Route::post('/listing/store', 'store')->middleware(['auth', 'verified'])->name('listing.store');
-    Route::put('/listing/{listing}', 'update')->middleware(['auth', 'verified'])->name('listing.update');
-    Route::get('/listing/{listing}/shop', 'shop')->middleware(['auth', 'verified'])->name('listing.shop');
-    Route::put('/listing/{listing}/promote', 'promote')->middleware(['auth', 'verified'])->name('listing.promote');
-    Route::delete('/listing/{listing}', 'destroy')->middleware(['auth', 'verified'])->name('listing.destroy');
 });
 
-Route::controller(MessageController::class)->group(function () {
-    Route::post('/chat/{chat}', 'store')->middleware(['auth', 'verified'])->name('message.store');
-});
+Route::controller(MessageController::class)
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::post('/chat/{chat}', 'store')->name('message.store');
+    });
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->middleware('auth')->name('user.dashboard');
