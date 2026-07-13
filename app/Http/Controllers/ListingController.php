@@ -21,15 +21,8 @@ class ListingController extends Controller
 
         $keyword = $request->input('keyword');
 
-        $listings = Listing::when(!empty($categoryId), function ($query) use ($categoryId) {
-            $query->whereHas('categories', function ($query) use ($categoryId) {
-                $query->where('categories.id', $categoryId);
-            });
-        })
-            ->when(!empty($keyword), function ($query) use ($keyword) {
-                $query->where('description', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('name', 'LIKE', '%' . $keyword . '%');
-            })
+        $listings = Listing::when(!empty($categoryId), fn($q) => $q->withCategory($categoryId))
+            ->when(!empty($keyword), fn($q) => $q->withKeyword($keyword))
             ->orderByRaw('promoted DESC, updated_at DESC')
             ->paginate(12);
 
